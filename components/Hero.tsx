@@ -48,8 +48,10 @@ export default function Hero() {
         <div className="absolute -right-10 top-[40%] h-24 w-[380px] rounded-[60px] bg-blob animate-blobFloat [animation-delay:-1.2s] dark:bg-blobDark" />
         <div className="absolute -right-6 bottom-[-30px] h-24 w-24 rounded-full bg-blob animate-blobFloat [animation-delay:-3.4s] dark:bg-blobDark" />
       </div>
+{/* 
+      <div className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col items-center gap-10 px-6 py-14 sm:px-10 md:flex-row md:items-center md:gap-6 md:px-16 md:py-0"> */}
+<div className="relative z-10 mx-auto flex min-h-screen max-w-[1440px] flex-col items-center gap-8 px-5 py-12 sm:px-10 md:flex-row md:items-center md:gap-6 md:px-16 md:py-0">
 
-      <div className="relative z-10 mx-auto flex h-full max-w-[1440px] flex-col items-center gap-10 px-6 py-14 sm:px-10 md:flex-row md:items-center md:gap-6 md:px-16 md:py-0">
         {/* Left: headline + copy */}
         <div className="w-full animate-fadeUp md:w-[46%]">
           <h1 className="text-[2.1rem] font-normal leading-[1.1] text-headline transition-colors duration-500 dark:text-headlineDark sm:text-[2.6rem] md:text-[3.15rem] lg:text-[3.4rem]">
@@ -65,7 +67,10 @@ export default function Hero() {
         </div>
 
         {/* Right: floating-card visualization */}
-        <div className="relative h-[360px] w-full sm:h-[440px] md:h-[560px] md:w-[54%]">
+        {/* <div className="relative h-[360px] w-full sm:h-[440px] md:h-[560px] md:w-[54%]"> */}
+
+
+        <div className="relative h-auto w-full sm:h-[440px] md:h-[560px] md:w-[54%]">
           {/* Desktop / tablet: physics-driven rain of cards */}
           <div className="hidden h-full w-full sm:block">
             <GravityCards />
@@ -76,7 +81,10 @@ export default function Hero() {
             {MOBILE_CARDS.map((card, i) => (
               <div
                 key={card.label}
-                className="w-full max-w-xs animate-gentleFloat"
+                // className="w-full max-w-xs animate-gentleFloat"
+
+
+                className="w-full max-w-[320px] animate-gentleFloat"
                 style={{ animationDelay: `${i * 0.4}s` }}
               >
                 <FloatingCard
@@ -88,7 +96,8 @@ export default function Hero() {
                 />
               </div>
             ))}
-            <div className="w-full max-w-xs animate-gentleFloat" style={{ animationDelay: "1.6s" }}>
+            <div className="w-full max-w-[320px] animate-gentleFloat" 
+            style={{ animationDelay: "1.6s" }}>
               <FloatingCard
                 color="portal"
                 variant="portal"
