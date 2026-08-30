@@ -17,13 +17,22 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
   const [isDark, setIsDark] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    const stored = window.localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const shouldBeDark = stored ? stored === "dark" : prefersDark;
+  // useEffect(() => {
+  //   const stored = window.localStorage.getItem("theme");
+  //   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  //   const shouldBeDark = stored ? stored === "dark" : prefersDark;
 
-    document.documentElement.classList.toggle("dark", shouldBeDark);
-    setIsDark(shouldBeDark);
+  //   document.documentElement.classList.toggle("dark", shouldBeDark);
+  //   setIsDark(shouldBeDark);
+  //   setMounted(true);
+  // }, []);
+
+
+  useEffect(() => {
+    // The blocking script in layout.tsx already applied the correct
+    // class before first paint — just sync this component's state to
+    // match it, instead of re-deciding (and re-flashing) the theme here.
+    setIsDark(document.documentElement.classList.contains("dark"));
     setMounted(true);
   }, []);
 

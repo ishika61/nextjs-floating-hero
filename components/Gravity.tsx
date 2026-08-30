@@ -128,14 +128,31 @@ export default function Gravity({
         ),
       ];
 
+      // if (addTopWall) {
+      //   bodies.push(
+      //     Matter.Bodies.rectangle(width / 2, -THICKNESS / 2, width * 2, THICKNESS, {
+      //       isStatic: true,
+      //       label: "wall-top",
+      //     })
+      //   );
+      // }
+
+
       if (addTopWall) {
+        // Sits well above the highest spawn point (GravityCards spawns
+        // cards up to ~-400px above the container) so falling cards drop
+        // into view first. Still catches anything thrown upward hard
+        // enough to escape, which is its actual purpose.
+        const TOP_WALL_Y = -600;
         bodies.push(
-          Matter.Bodies.rectangle(width / 2, -THICKNESS / 2, width * 2, THICKNESS, {
+          Matter.Bodies.rectangle(width / 2, TOP_WALL_Y, width * 2, THICKNESS, {
             isStatic: true,
             label: "wall-top",
           })
         );
       }
+
+
 
       wallsRef.current = bodies;
       Matter.World.add(engine.world, bodies);
@@ -293,6 +310,24 @@ export function MatterBody({
       density = 0.0016,
     } = matterBodyOptions;
 
+    // const body = Matter.Bodies.rectangle(px, py, width, height, {
+    //   restitution,
+    //   friction,
+    //   frictionAir,
+    //   density,
+    //   chamfer: { radius: Math.min(height / 2, 24) },
+    //   angle: (angle * Math.PI) / 180,
+    // }) as Matter.Body & { plugin: { isDraggable: boolean } };
+
+    // body.plugin = { isDraggable };
+
+    // // A little spin + lateral drift on entry so cards don't fall in a
+    // // perfectly uniform, robotic way.
+    // Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.12);
+    // Matter.Body.setVelocity(body, {
+    //   x: (Math.random() - 0.5) * 2.2,
+    //   y: 0,
+    // });
     const body = Matter.Bodies.rectangle(px, py, width, height, {
       restitution,
       friction,
@@ -300,18 +335,20 @@ export function MatterBody({
       density,
       chamfer: { radius: Math.min(height / 2, 24) },
       angle: (angle * Math.PI) / 180,
+      inertia: Infinity, // locks rotation — collisions push/slide the card but never spin/flip it upside-down
     }) as Matter.Body & { plugin: { isDraggable: boolean } };
 
     body.plugin = { isDraggable };
 
-    // A little spin + lateral drift on entry so cards don't fall in a
-    // perfectly uniform, robotic way.
-    Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.12);
+    // Lateral drift only on entry — no random spin, so every card keeps
+    // its designed tilt and stays readable.
     Matter.Body.setVelocity(body, {
       x: (Math.random() - 0.5) * 2.2,
       y: 0,
     });
 
+
+    
     bodyRef.current = body;
     Matter.World.add(world, body);
 
