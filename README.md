@@ -9,6 +9,8 @@ The project combines a clean split-layout design with an interactive physics-bas
 ## 🚀 Live Demo
 
 **Demo video:** https://drive.google.com/file/d/1FLz56gXXXzX7fNqPomXCPuTIy28EveeD/view?usp=sharing
+
+
 **Live URL:** https://nextjs-floating-hero.onrender.com/
 
 **GitHub:** https://github.com/ishika61/nextjs-floating-hero
